@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import { Col, Row, Container } from "../../components/Grid";
 import Jumbotron from "../../components/Jumbotron";
 import API from "../../utils/API";
+import { Input, TextArea, FormBtn } from "../../components/Form";
+
 
 class Detail extends Component {
   state = {
@@ -16,6 +18,28 @@ class Detail extends Component {
       .catch(err => console.log(err));
   }
 
+  handleInputChange = event => {
+    const { name, value } = event.target;
+    this.setState({
+      [name]: value
+    });
+  };
+  
+  handleFormSubmit = event => {
+    event.preventDefault();
+    if (this.state.title && this.state.price) {
+      API.saveBook({
+        title: this.state.title,
+        price: this.state.price,
+        quantity: this.state.quantity,
+        total: this.state.total,
+        location: this.state.location
+      })
+        .then(res => this.loadBooks())
+        .catch(err => console.log(err));
+    }
+  };
+  
   render() {
     return (
       <Container fluid>
@@ -23,15 +47,18 @@ class Detail extends Component {
           <Col size="md-12">
             <Jumbotron>
               <h1>
-                {this.state.book.title} by {this.state.book.author}
+                Product: {this.state.book.title}
               </h1>
+              <h2>
+                Quantity: {this.state.book.quantity} Price: {this.state.book.price} Total: {this.state.book.quantity * this.state.book.price}
+              </h2>
             </Jumbotron>
           </Col>
         </Row>
         <Row>
           <Col size="md-10 md-offset-1">
             <article>
-              <h1>Synopsis</h1>
+              <h1>Update</h1>
               <p>
                 {this.state.book.synopsis}
               </p>
@@ -40,7 +67,33 @@ class Detail extends Component {
         </Row>
         <Row>
           <Col size="md-2">
-            <Link to="/">← Back to Authors</Link>
+          <form>
+              <Input
+                value={this.state.title}
+                onChange={this.handleInputChange}
+                name="title"
+                placeholder="Item (required)"
+              />
+               <Input
+                value={this.state.quantity}
+                onChange={this.handleInputChange}
+                name="quantity"
+                placeholder="Quantity"
+              />
+              <Input
+                value={this.state.price}
+                onChange={this.handleInputChange}
+                name="price"
+                placeholder="Price (required)"
+              />
+              <FormBtn
+                disabled={!(this.state.price && this.state.title)}
+                onClick={this.handleFormSubmit}
+              >
+                Add
+              </FormBtn>
+            </form>
+            <Link to="/">← Back to Current Inventory</Link>
           </Col>
         </Row>
       </Container>
