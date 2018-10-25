@@ -67,7 +67,10 @@ class Books extends Component {
         .catch(err => console.log(err));
     }
   };
-
+  add(){
+    let newTotal = this.quantity ++;
+    return newTotal;
+  }
   printDocument() {
     const input = document.getElementById('divToPrint');
     html2canvas(input)

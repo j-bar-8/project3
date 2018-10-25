@@ -52,6 +52,7 @@ class Detail extends Component {
               <h2>
                 Quantity: {this.state.book.quantity} Price: {this.state.book.price} Total: {this.state.book.quantity * this.state.book.price}
               </h2>
+              <h2>Size: 750ml Distributor: Breakthru</h2>
             </Jumbotron>
           </Col>
         </Row>
@@ -86,11 +87,23 @@ class Detail extends Component {
                 name="price"
                 placeholder="Price (required)"
               />
+              <Input
+                value={this.state.price}
+                onChange={this.handleInputChange}
+                name="price"
+                placeholder="Size"
+              />
+              <Input
+                value={this.state.price}
+                onChange={this.handleInputChange}
+                name="price"
+                placeholder="Distributor"
+              />
               <FormBtn
                 disabled={!(this.state.price && this.state.title)}
                 onClick={this.handleFormSubmit}
               >
-                Add
+                Update
               </FormBtn>
             </form>
             <Link to="/">← Back to Current Inventory</Link>
