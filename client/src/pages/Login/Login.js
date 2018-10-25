@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { Col, Row, Container } from "../../components/Grid";
-import Jumbotron from "../../components/Jumbotron";
+import LoginJumbo from "../../components/LoginJumbo";
+import "./Login.css";
 
 class Login extends Component {
     state = {
@@ -11,9 +12,14 @@ class Login extends Component {
     render() {
     return (
         <Container fluid>
-            <Jumbotron>
+            <LoginJumbo>
                 <h1>86D</h1>
-            </Jumbotron>
+                <h2>Take Inventory Faster</h2>
+                <Link to="/">Olde Bar</Link>
+                <br></br>
+                <Link to="/">Amada</Link>
+            </LoginJumbo>
+            
         </Container>
     )
     }
