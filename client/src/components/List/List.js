@@ -4,7 +4,7 @@ import "./List.css";
 export const List = ({ children }) => {
   return (
     <div className="list-overflow-container">
-      <ul className="list-group">
+      <ul className="list-group" id="divToPrint">
         {children}
       </ul>
     </div>

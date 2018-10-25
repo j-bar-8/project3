@@ -6,19 +6,31 @@ import { Link } from "react-router-dom";
 import { Col, Row, Container } from "../../components/Grid";
 import { List, ListItem } from "../../components/List";
 import { Input, TextArea, FormBtn } from "../../components/Form";
-
+import html2canvas from "html2canvas";
+import jsPDF from "jspdf";
+import Moment from "react-moment";
+import moment from "moment";
 class Books extends Component {
   state = {
     books: [],
     title: "",
     price: "",
     quantity: "",
+    total: 0.00,
+    location: "",
+    date: ""
   };
 
   componentDidMount() {
     this.loadBooks();
+    }
+  
+  getDate() {
+    let date = { currentTime: new Date().toLocaleString() };
+    this.setState({
+      date: date
+    });
   }
-
   loadBooks = () => {
     API.getBooks()
       .then(res =>
@@ -47,20 +59,35 @@ class Books extends Component {
         title: this.state.title,
         price: this.state.price,
         quantity: this.state.quantity,
-        price: this.state.price
+        total: this.state.total,
+        location: this.state.location
       })
         .then(res => this.loadBooks())
         .catch(err => console.log(err));
     }
   };
 
+  printDocument() {
+    const input = document.getElementById('divToPrint');
+    html2canvas(input)
+      .then((canvas) => {
+        const imgData = canvas.toDataURL('img/png');
+        const pdf = new jsPDF();
+        pdf.addImage(imgData, 'JPEG', 0, 0);
+        pdf.save("download.pdf");
+      });
+  }
+  
+  
   render() {
-    return (
+  const dateToFormat = moment();
+  return (
       <Container fluid>
         <Row>
           <Col size="md-4">
             <Jumbotron>
               <h1>Add To Inventory</h1>
+              <Moment>{dateToFormat}</Moment>
             </Jumbotron>
             <form>
               <Input
@@ -99,13 +126,15 @@ class Books extends Component {
                   <ListItem key={book._id}>
                     <Link to={"/books/" + book._id}>
                       <strong>
-                        {book.title}  {book.quantity}  {book.price}
+                        {book.title} Quantity: {book.quantity} Price: {book.price} Total: {book.quantity * book.price}
                       </strong>
                     </Link>
                     <DeleteBtn onClick={() => this.deleteBook(book._id)} />
                   </ListItem>
                 ))}
+              <button onClick={this.printDocument}>Print</button>
               </List>
+              
             ) : (
               <h3>No Results to Display</h3>
             )}

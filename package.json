@@ -22,7 +22,12 @@
   "dependencies": {
     "axios": "^0.16.2",
     "express": "^4.16.3",
+    "html2canvas": "^1.0.0-alpha.12",
+    "if-env": "^1.0.4",
+    "jspdf": "^1.4.1",
+    "moment": "^2.22.2",
+    "moment-timezone": "^0.5.21",
     "mongoose": "^5.0.17",
-    "if-env": "^1.0.4"
+    "react-moment": "^0.8.2"
   }
 }

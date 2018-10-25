@@ -5,6 +5,8 @@ const bookSchema = new Schema({
   title: { type: String, required: true },
   price: { type: Number, required: true },
   quantity: Number,
+  total: Number,
+  location: String,
   date: { type: Date, default: Date.now }
 });
 
